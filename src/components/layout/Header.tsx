@@ -2,13 +2,7 @@ import { Link } from "react-router-dom";
 import { Heart } from "lucide-react";
 import { useHeaderLogic } from "@/hooks/useHeaderLogic";
 
-const navItems = [
-  { name: "בית", path: "/" },
-  { name: "אודות", path: "/about" },
-  { name: "קורסים", path: "/courses" },
-  { name: "מאמרים", path: "/articles" },
-  { name: "עדויות", path: "/testimonials" },
-];
+
 
 function LogoSection() {
   return (
@@ -24,16 +18,17 @@ function LogoSection() {
 }
 
 
-function NavLinksSection(props: { isActive: (path: string) => boolean }) {
+function NavLinksSection(props: { isActive: (path: string) => boolean; navItems: { name: string; path: string }[] }) {
   return (
     <nav className="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 px-[100px] space-x-8 rtl:space-x-reverse transition-all duration-300">
-      {navItems.map((item) => (
+      {props.navItems.map((item) => (
         <Link
           key={item.path}
           to={item.path}
+          aria-current={props.isActive(item.path) ? "page" : undefined}
           className={`relative px-3 py-2 text-sm font-medium transition-all duration-300 hover:text-primary ${props.isActive(item.path)
-              ? "text-primary"
-              : "text-gray-700 hover:text-primary"
+            ? "text-primary"
+            : "text-gray-700 hover:text-primary"
             }`}
         >
           {item.name}
@@ -70,19 +65,20 @@ function MobileMenuSection(props: {
   isMenuOpen: boolean;
   closeMenu: () => void;
   isActive: (path: string) => boolean;
+  navItems: { name: string; path: string }[];
 }) {
   if (!props.isMenuOpen) return null;
   return (
     <div className="lg:hidden mt-4 py-4 border-t border-gray-200">
       <nav className="flex flex-col space-y-4">
-        {navItems.map((item) => (
+        {props.navItems.map((item) => (
           <Link
             key={item.path}
             to={item.path}
             onClick={props.closeMenu}
             className={`px-4 py-2 text-sm font-medium transition-colors ${props.isActive(item.path)
-                ? "text-primary bg-primary/10 rounded-lg"
-                : "text-gray-700 hover:text-primary hover:bg-gray-50 rounded-lg"
+              ? "text-primary bg-primary/10 rounded-lg"
+              : "text-gray-700 hover:text-primary hover:bg-gray-50 rounded-lg"
               }`}
           >
             {item.name}
@@ -93,6 +89,13 @@ function MobileMenuSection(props: {
   );
 }
 const Header = () => {
+  const navItems = [
+    { name: "בית", path: "/" },
+    { name: "אודות", path: "/about" },
+    { name: "קורסים", path: "/courses" },
+    { name: "מאמרים", path: "/articles" },
+    { name: "עדויות", path: "/testimonials" },
+  ];
   const { isMenuOpen, toggleMenu, closeMenu, isActive } = useHeaderLogic();
 
   return (
@@ -100,14 +103,18 @@ const Header = () => {
       <div className="container mx-auto px-4 py-4">
         <div className="relative flex items-center">
           <LogoSection />
-          <NavLinksSection isActive={isActive} />
+          <NavLinksSection
+            isActive={isActive}
+            navItems={navItems}
+          />
           <HamburgerSection isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
+          <MobileMenuSection
+            isMenuOpen={isMenuOpen}
+            closeMenu={closeMenu}
+            isActive={isActive}
+            navItems={navItems}
+          />
         </div>
-        <MobileMenuSection
-          isMenuOpen={isMenuOpen}
-          closeMenu={closeMenu}
-          isActive={isActive}
-        />
       </div>
     </header>
   );
