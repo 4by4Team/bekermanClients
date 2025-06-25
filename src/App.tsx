@@ -14,7 +14,7 @@ import Article from "./pages/Article";
 import Courses from "./pages/Courses";
 import Course from "./pages/Course";
 import CourseRegistration from "./pages/CourseRegistration";
-import Testimonials from "./pages/Testimonials";
+import Testimonials from "./pages/testimonial/Testimonials";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
