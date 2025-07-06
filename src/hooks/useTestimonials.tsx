@@ -18,11 +18,17 @@ export const useTestimonials = ( itemsPerPage: number = 6) => {
 
   const totalPages = Math.ceil(testimonials.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
-
   const currentTestimonials = useMemo(
-    () => testimonials.slice(startIndex, startIndex + itemsPerPage),
+    () =>
+      testimonials
+        .slice(startIndex, startIndex + itemsPerPage)
+        .map((testimonial, index) => ({
+          ...testimonial,
+          color: index % 2 === 0 ? 'violet' : 'emerald',
+        })),
     [testimonials, startIndex, itemsPerPage]
   );
+  
 
   const toggleExpanded = (testimonialId: number) => {
     setExpandedTestimonial(prev => (prev === testimonialId ? null : testimonialId));
