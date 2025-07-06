@@ -1,6 +1,7 @@
-import { ArrowLeft, Sparkles, Heart, Target, Shield, Users } from "lucide-react";
+import { ArrowLeft, Sparkles, Heart, Target, Shield, Users, Pause, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 
 function CloudsBackgroundSection() {
@@ -143,6 +144,72 @@ function CallToActionSection() {
     </section>
   );
 }
+
+function TestimoniesSection(props: { testimonies }) {
+  const [playingVideo, setPlayingVideo] = useState<number | null>(null);
+
+  const toggleVideo = (idx: number) => {
+    if (playingVideo === idx) {
+      setPlayingVideo(null);
+    } else {
+      setPlayingVideo(idx);
+    }
+  };
+
+  return (
+    <section className="max-w-5xl mx-auto my-20">
+      <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-10">מה מספרים עלינו?</h2>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+        {props.testimonies.map((testimony, idx) => (
+          <div
+            key={idx}
+            className="bg-white/80 rounded-2xl shadow-lg p-0 flex flex-col items-center text-center border border-gray-100 hover:shadow-xl transition-all duration-300 overflow-hidden"
+          >
+            <div className="relative w-full aspect-video">
+              <img
+                src={testimony.thumbnail}
+                alt={testimony.name}
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+                <button
+                  onClick={() => toggleVideo(idx)}
+                  className="w-14 h-14 bg-gradient-to-r from-white/95 via-gray-50/98 to-white/95 hover:bg-white rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-2xl backdrop-blur-sm border border-white/60"
+                >
+                  {playingVideo === idx ? (<Pause className="w-7 h-7 text-gray-800" />
+                  ) : (
+                    <Play className="w-7 h-7 text-gray-800 mr-1" />
+                  )}
+                </button>
+              </div>
+              {playingVideo === idx && (
+                <video
+                  src={testimony.videoUrl}
+                  controls
+                  autoPlay
+                  className="absolute inset-0 w-full h-full object-cover z-10"
+                  poster={testimony.thumbnail}
+                  onEnded={() => setPlayingVideo(null)}
+                />
+              )}
+            </div>
+            <div className="p-6 flex flex-col items-center">
+              <div className="font-bold text-emerald-700 mb-2">{testimony.name}</div>
+              <div className="text-gray-700 text-sm">{testimony.quote}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="flex justify-center">
+        <Link to="/testimonials">
+          <Button size="lg" className="bg-gradient-to-r from-emerald-600 to-violet-600 text-white font-bold px-8 py-3 rounded-full text-lg transition-all duration-300 hover:scale-105">
+            לצפייה בעוד עדויות
+          </Button>
+        </Link>
+      </div>
+    </section>
+  );
+}
 const features = [
   {
     icon: Heart,
@@ -171,7 +238,26 @@ const stats = [
   { number: "15+", label: "קורסים מקצועיים" },
   { number: "5+", label: "שנות ניסיון" },
 ];
-
+const testimoniesMock = [
+  {
+    name: "נועה לוי",
+    quote: "הקורס שינה לי את החיים! צוות מקצועי, תכנים מעולים ויחס אישי לאורך כל הדרך.",
+    thumbnail: "https://images.unsplash.com/photo-1494790108755-2616b612b789?w=400&h=300&fit=crop",
+    videoUrl: "/testimonials/video1.mp4",
+  },
+  {
+    name: "דוד כהן",
+    quote: "לא האמנתי שאצליח להתמיד, אבל התמיכה והקהילה כאן פשוט מדהימים. ממליץ בחום!",
+    thumbnail: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=300&fit=crop",
+    videoUrl: "/testimonials/video2.mp4",
+  },
+  {
+    name: "שירה בן-דוד",
+    quote: "הידע שקיבלתי כאן הוא מתנה לכל החיים. תודה על הכל!",
+    thumbnail: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=300&fit=crop",
+    videoUrl: "/testimonials/video3.mp4",
+  },
+];
 function Home() {
   return (
     <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-gray-50 via-white to-gray-100">
@@ -180,6 +266,7 @@ function Home() {
         <HeroSection />
         <StatsSection stats={stats} />
         <FeaturesSection features={features} />
+        <TestimoniesSection testimonies={testimoniesMock} />
         <CallToActionSection />
       </div>
     </div>
