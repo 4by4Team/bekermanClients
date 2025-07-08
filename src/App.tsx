@@ -11,7 +11,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Articles from "./pages/Articles";
-import Article from "./pages/Article";
+import Article from "./components/articles/Article";
 import Courses from "./pages/Courses";
 import Course from "./pages/Course";
 import CourseRegistration from "./pages/CourseRegistration";
