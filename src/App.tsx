@@ -5,6 +5,18 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { RouterProvider } from "react-router-dom";
 import { myRouter } from "./Router";
+import Header from "./components/layout/Header";
+import Footer from "./components/layout/Footer";
+import ScrollToTop from "./components/ScrollToTop";
+import Home from "./pages/Home";
+import About from "./pages/About";
+import Articles from "./pages/Articles";
+import Article from "./pages/Article";
+import Courses from "./pages/Courses";
+import Course from "./pages/Course";
+import CourseRegistration from "./pages/CourseRegistration";
+import Testimonials from "./pages/testimonial/Testimonials";
+import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
