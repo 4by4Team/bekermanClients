@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -16,37 +15,44 @@ import Course from "./pages/Course";
 import CourseRegistration from "./pages/CourseRegistration";
 import Testimonials from "./pages/testimonial/Testimonials";
 import NotFound from "./pages/NotFound";
+import { Provider } from "react-redux";
+import { store } from "@/store/store";
 
 const queryClient = new QueryClient();
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <ScrollToTop />
-        <div className="min-h-screen flex flex-col" dir="rtl">
-          <Header />
-          <main className="flex-1">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/articles" element={<Articles />} />
-              <Route path="/article/:id" element={<Article />} />
-              <Route path="/courses" element={<Courses />} />
-              <Route path="/course/:id" element={<Course />} />
-              <Route path="/course/:id/register" element={<CourseRegistration />} />
-              <Route path="/testimonials" element={<Testimonials />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </main>
-          <Footer />
-        </div>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
+  <Provider store={store}>
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <ScrollToTop />
+          <div className="min-h-screen flex flex-col" dir="rtl">
+            <Header />
+            <main className="flex-1">
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/articles" element={<Articles />} />
+                <Route path="/article/:id" element={<Article />} />
+                <Route path="/courses" element={<Courses />} />
+                <Route path="/course/:id" element={<Course />} />
+                <Route
+                  path="/course/:id/register"
+                  element={<CourseRegistration />}
+                />
+                <Route path="/testimonials" element={<Testimonials />} />
+                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </main>
+            <Footer />
+          </div>
+        </BrowserRouter>
+      </TooltipProvider>
+    </QueryClientProvider>
+  </Provider>
 );
 
 export default App;
