@@ -3,19 +3,12 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { User, Clock, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
+import { Article } from "@/types/article.type";
 
-export interface ArticleType {
-  id: number;
-  title: string;
-  excerpt: string;
-  author: string;
-  readTime: string;
-  category: string;
-  image: string;
-}
+
 
 interface ArticleCardProps {
-  article: ArticleType;
+  article: Article;
   index: number;
 }
 

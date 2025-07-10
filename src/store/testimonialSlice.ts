@@ -4,7 +4,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 const BASE_URL = 'https://healthapplicationserver.onrender.com/api';
 export const fetchTestimonials = createAsyncThunk(
-  'testimonials/fetch',
+  "testimonials/fetch",
   async () => {
     const res = await axios.get<Testimonial[]>(`${BASE_URL}/testimonies`);
     return res.data;
@@ -24,7 +24,7 @@ const initialState: TestimonialsState = {
 };
 
 const testimonialSlice = createSlice({
-  name: 'testimonials',
+  name: "testimonials",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -39,7 +39,7 @@ const testimonialSlice = createSlice({
       })
       .addCase(fetchTestimonials.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message || 'שגיאה בעת שליפת נתונים';
+        state.error = action.error.message || "שגיאה בעת שליפת נתונים";
       });
   },
 });
