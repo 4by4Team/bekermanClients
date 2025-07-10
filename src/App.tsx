@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -17,6 +16,8 @@ import Course from "./pages/Course";
 import CourseRegistration from "./pages/CourseRegistration";
 import Testimonials from "./pages/testimonial/Testimonials";
 import NotFound from "./pages/NotFound";
+import { Provider } from "react-redux";
+import { store } from "@/store/store";
 
 const queryClient = new QueryClient();
 
