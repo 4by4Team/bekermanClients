@@ -29,6 +29,7 @@ const App = () => (
       <RouterProvider router={myRouter} />
     </TooltipProvider>
   </QueryClientProvider>
+
 );
 
 export default App;
