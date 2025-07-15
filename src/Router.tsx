@@ -3,7 +3,7 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Articles from "./pages/Articles";
 import Article from "./pages/Article";
-import Courses from "./pages/Courses";
+import Courses from "./pages/coursesList/Courses";
 import Course from "./pages/Course";
 import CourseRegistration from "./pages/CourseRegistration";
 import NotFound from "./pages/NotFound";
