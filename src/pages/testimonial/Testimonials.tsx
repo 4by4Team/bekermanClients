@@ -1,8 +1,7 @@
 
-import {  Quote, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
-
 import { Testimonial } from '@/types/Testimonial';
 import { TestimonialCard } from './TestimonialCard';
 import VideoModal from './VideoModal';
@@ -102,95 +101,6 @@ const renderVideoModal = (youtubeId: string | null, onClose: () => void) => {
   return <VideoModal youtubeId={youtubeId} onClose={onClose} />;
 };
 
-// const Testimonials = ({ testimonials, itemsPerPage = 6 }: TestimonialsProps) => {
-//   //get all the data first here or on another place check it and add theme to each one
-//   testimonials=[{
-//     id: 1,
-//     category: 'הרזיה',
-//     title: 'איך הצלחתי לרדת 15 ק״ג בחצי שנה',
-//     quote: 'המסע שלי החל כשהבנתי שאני צריכה לעשות שינוי אמיתי בחיי. עם הליווי המקצועי והתמיכה שקיבלתי, הצלחתי להגיע ליעדים שלי ויותר מזה.',
-//     youtubeId: 'JU9qI0cM1Xo',
-//     colorTheme: 'emerald'
-//   },
-//   {
-//     id: 2,
-//     category: 'פיזיותרפיה',
-//     title: 'התגברתי על כאבי גב כרוניים',
-//     quote: 'אחרי שנים של כאבי גב שפגעו בכל תחום בחיי, הקורס נתן לי לא רק הקלה אלא פתרון לטווח הארוך. היום אני יכול לחזור לעשות דברים שאהבתי.',
-//     youtubeId: 'zogAnLOTdKE',
-//     colorTheme: 'violet'
-//   },
-//   {
-//     id: 3,
-//     category: 'פיזיותרפיה',
-//     title: 'התגברתי על כאבי גב כרוניים',
-//     quote: 'אחרי שנים של כאבי גב שפגעו בכל תחום בחיי, הקורס נתן לי לא רק הקלה אלא פתרון לטווח הארוך. היום אני יכול לחזור לעשות דברים שאהבתי.',
-//     youtubeId: 'zogAnLOTdKE',
-//     colorTheme: 'violet'
-//   }
-// ,{
-//   id: 4,
-//   category: 'פיזיותרפיה',
-//   title: 'התגברתי על כאבי גב כרוניים',
-//   quote: 'אחרי שנים של כאבי גב שפגעו בכל תחום בחיי, הקורס נתן לי לא רק הקלה אלא פתרון לטווח הארוך. היום אני יכול לחזור לעשות דברים שאהבתי.',
-//   youtubeId: 'zogAnLOTdKE',
-//   colorTheme: 'violet'
-// },{
-//   id: 5,
-//   category: 'פיזיותרפיה',
-//   title: 'התגברתי על כאבי גב כרוניים',
-//   quote: 'אחרי שנים של כאבי גב שפגעו בכל תחום בחיי, הקורס נתן לי לא רק הקלה אלא פתרון לטווח הארוך. היום אני יכול לחזור לעשות דברים שאהבתי.',
-//   youtubeId: 'zogAnLOTdKE',
-//   colorTheme: 'violet'
-// }
-// ,{
-//   id: 6,
-//   category: 'פיזיותרפיה',
-//   title: 'התגברתי על כאבי גב כרוניים',
-//   quote: 'אחרי שנים של כאבי גב שפגעו בכל תחום בחיי, הקורס נתן לי לא רק הקלה אלא פתרון לטווח הארוך. היום אני יכול לחזור לעשות דברים שאהבתי.',
-//   youtubeId: 'zogAnLOTdKE',
-//   colorTheme: 'violet'
-// },{
-//   id: 7,
-//   category: 'פיזיותרפיה',
-//   title: 'התגברתי על כאבי גב כרוניים',
-//   quote: 'אחרי שנים של כאבי גב שפגעו בכל תחום בחיי, הקורס נתן לי לא רק הקלה אלא פתרון לטווח הארוך. היום אני יכול לחזור לעשות דברים שאהבתי.',
-//   youtubeId: 'zogAnLOTdKE',
-//   colorTheme: 'violet'
-// }
-// ]
-//   const {
-//     activeYoutubeId,
-//     setActiveYoutubeId,
-//     expandedTestimonial,
-//     toggleExpanded,
-//     currentPage,
-//     setCurrentPage,
-//     totalPages,
-//     currentTestimonials
-//   } = useTestimonials(itemsPerPage);
-//   //for loop which will choose a theme
-
-
-//   const navigate = useNavigate();
-//   const startIndex = (currentPage - 1) * itemsPerPage;
-
-
-//   return (
-//     <div className="min-h-screen pt-20 bg-gradient-to-br from-gray-50 via-white to-gray-100 relative">
-//       <section className="py-20 relative z-10 container mx-auto px-4 max-w-7xl">
-//         {renderTestimonialsList(currentTestimonials, expandedTestimonial, toggleExpanded, setActiveYoutubeId)}
-//         {renderPagination(currentPage, totalPages, setCurrentPage)}
-//       </section>
-
-//       {renderJoinToCourse(navigate)}
-//       {renderVideoModal(activeYoutubeId, () => setActiveYoutubeId(null))}
-//     </div>
-//   );
-  
-// };
-
-// export default Testimonials;
 const Testimonials = () => {
   const {
     activeYoutubeId,

@@ -1,9 +1,9 @@
 export interface Testimonial {
     id: number;
-    category: string;
     title: string;
-    quote: string;
+    summary: string;
     youtubeId: string;
+    // createdAt: string;
     colorTheme?: 'emerald' | 'violet';
   }
   

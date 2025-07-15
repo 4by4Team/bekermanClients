@@ -68,8 +68,8 @@ export const TestimonialCard = ({ testimonial, expanded, onToggleExpanded, onPla
                 <h3 className="text-lg lg:text-xl font-bold text-gray-800 mb-3 leading-tight">{testimonial.title}</h3>
 
                 <p className="text-gray-700 text-sm lg:text-base leading-relaxed mb-3">
-                    {expanded ? `"${testimonial.quote}"` : `"${testimonial.quote.length > 80 ? testimonial.quote.substr(0, 80) + '...' : testimonial.quote}"`}
-                    {testimonial.quote.length > 80 && (
+                    {expanded ? `"${testimonial.summary}"` : `"${testimonial.summary.length > 80 ? testimonial.summary.substr(0, 80) + '...' : testimonial.summary}"`}
+                    {testimonial.summary.length > 80 && (
                         <button
                             onClick={() => onToggleExpanded(testimonial.id)}
                             className={`${colorClasses.text} font-medium mr-2 hover:underline text-sm`}
