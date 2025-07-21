@@ -2,13 +2,15 @@ import { createBrowserRouter } from "react-router-dom";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Articles from "./pages/Articles";
-import Article from "./pages/Article";
+
 import Courses from "./pages/Courses";
 import Course from "./pages/Course";
 import CourseRegistration from "./pages/CourseRegistration";
-import Testimonials from "./pages/Testimonials";
+
 import NotFound from "./pages/NotFound";
 import AppLayout from "./AppLayout";
+import Article from "./components/articles/Article";
+import Testimonials from "./pages/testimonial/Testimonials";
 
 export const myRouter = createBrowserRouter([
   {
