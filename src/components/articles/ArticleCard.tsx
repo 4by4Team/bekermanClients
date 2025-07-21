@@ -7,20 +7,16 @@ import { Article } from "@/types/article.type";
 
 
 
-interface ArticleCardProps {
-  article: Article;
-  index: number;
-}
 
 const ArticleImage = memo(
   ({
     image,
     title,
-    category,
+    categoryId,
   }: {
     image: string;
     title: string;
-    category: string;
+    categoryId: number;
   }) => (
     <div className="md:w-1/3 relative overflow-hidden">
       <img
@@ -30,7 +26,7 @@ const ArticleImage = memo(
       />
       <div className="absolute inset-0 bg-gradient-to-t from-gray-900/20 via-transparent to-transparent"></div>
       <div className="absolute top-4 right-4 bg-gradient-to-r from-white/95 via-gray-50/98 to-white/95 backdrop-blur-sm rounded-full px-3 py-1 text-sm font-medium text-violet-700 border border-violet-200/60">
-        {category}
+        {categoryId}
       </div>
       <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-400/70 to-violet-500/70"></div>
     </div>
@@ -50,7 +46,7 @@ const ArticleExcerpt = memo(({ excerpt }: { excerpt: string }) => (
 ));
 
 const ArticleMeta = memo(
-  ({ author, readTime }: { author: string; readTime: string }) => (
+  ({ author, readTime }: { author: string; readTime: number }) => (
     <div className="flex items-center justify-between text-sm text-gray-500 mb-4 pt-3 border-t border-gray-100/60">
       <div className="flex items-center space-x-2 rtl:space-x-reverse">
         <User className="w-4 h-4 text-violet-500" />
@@ -58,7 +54,7 @@ const ArticleMeta = memo(
       </div>
       <div className="flex items-center space-x-2 rtl:space-x-reverse">
         <Clock className="w-4 h-4 text-violet-500" />
-        <span>{readTime}</span>
+        <span>{readTime} דקות</span>
       </div>
     </div>
   )
@@ -72,6 +68,10 @@ const ArticleReadButton = memo(({ id }: { id: number }) => (
     </Button>
   </Link>
 ));
+interface ArticleCardProps {
+  article: Article;
+  index: number;
+}
 
 export const ArticleCard = memo(({ article, index }: ArticleCardProps) => (
   <Card
@@ -80,15 +80,15 @@ export const ArticleCard = memo(({ article, index }: ArticleCardProps) => (
   >
     <div className="flex flex-col md:flex-row h-full">
       <ArticleImage
-        image={article.image}
+        image={article.backgroundUrl}
         title={article.title}
-        category={article.category}
+        categoryId={article.categoryId}
       />
       <div className="md:w-2/3 flex flex-col justify-between">
         <CardContent className="p-6 bg-gradient-to-br from-white/80 via-gray-50/30 to-white/80 flex-1">
           <ArticleTitle title={article.title} />
-          <ArticleExcerpt excerpt={article.excerpt} />
-          <ArticleMeta author={article.author} readTime={article.readTime} />
+          <ArticleExcerpt excerpt={article.content} />
+          <ArticleMeta author={article.createdBy} readTime={article.readTime} />
           <ArticleReadButton id={article.id} />
         </CardContent>
       </div>

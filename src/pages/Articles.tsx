@@ -30,7 +30,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { RootState, AppDispatch } from "../store/store";
 import { fetchArticles, fetchCategories } from "@/store/articleSlice";
-import { getArticles, getCategories } from "@/lib/utils";
+
 
 const BackgroundElements = memo(() => (
   <div className="absolute inset-0">
@@ -81,8 +81,8 @@ const HeroSection = memo(() => (
 
 interface SidebarProps {
   categories: Category[];
-  selectedCategory: string;
-  setSelectedCategory: React.Dispatch<React.SetStateAction<string>>;
+  selectedCategory: number;
+  setSelectedCategory: React.Dispatch<React.SetStateAction<number>>;
   allArticlesCount: number;
 }
 
@@ -100,9 +100,9 @@ const Sidebar = memo(
       </h3>
       <div className="space-y-3">
         <button
-          onClick={() => setSelectedCategory("כל הנושאים")}
+          onClick={() => setSelectedCategory(0)}
           className={`w-full text-right p-4 rounded-xl transition-all duration-500 flex justify-between items-center group transform hover:scale-[1.02] ${
-            selectedCategory === "כל הנושאים"
+            selectedCategory === 0
               ? "bg-gradient-to-r from-violet-400/60 to-emerald-400/60 text-white shadow-lg shadow-violet-200/50"
               : "hover:bg-gradient-to-r hover:from-gray-50/80 hover:to-violet-50/40 text-gray-700 hover:text-violet-700 bg-gradient-to-r from-gray-50/50 to-white/80 border border-gray-100/60"
           }`}
@@ -120,9 +120,9 @@ const Sidebar = memo(
           return (
             <button
               key={category.id}
-              onClick={() => setSelectedCategory(category.name)}
+              onClick={() => setSelectedCategory(category.id)}
               className={`w-full text-right p-4 rounded-xl transition-all duration-500 flex justify-between items-center group transform hover:scale-[1.02] ${
-                selectedCategory === category.name
+                selectedCategory === category.id
                   ? "bg-gradient-to-r from-violet-400/60 to-emerald-400/60 text-white shadow-lg shadow-violet-200/50"
                   : "hover:bg-gradient-to-r hover:from-gray-50/80 hover:to-violet-50/40 text-gray-700 hover:text-violet-700 bg-gradient-to-r from-gray-50/50 to-white/80 border border-gray-100/60"
               }`}
@@ -144,7 +144,7 @@ const Sidebar = memo(
 
 interface ArticlesGridProps {
   articles: Article[];
-  selectedCategory: string;
+  selectedCategory: number;
 }
 
 const ArticlesGrid = memo(
@@ -152,7 +152,7 @@ const ArticlesGrid = memo(
     <div className="lg:w-3/4">
       <div className="mb-6">
         <h2 className="text-2xl font-bold text-gray-800">
-          {selectedCategory === "כל הנושאים" ? "כל המאמרים" : selectedCategory}
+          {selectedCategory === 0 ? "כל המאמרים" : selectedCategory}
         </h2>
         <p className="text-gray-600">{articles.length} מאמרים נמצאו</p>
       </div>
@@ -166,25 +166,23 @@ const ArticlesGrid = memo(
 );
 
 const Articles = () => {
-  const [selectedCategory, setSelectedCategory] = useState("כל הנושאים");
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [articles, setArticles] = useState<Article[]>([]);
-  // const dispatch = useDispatch<AppDispatch>();
-  // const { articles, categories, loading, error } = useSelector(
-  //   (state: RootState) => state.articles
-  // );
+  const [selectedCategory, setSelectedCategory] = useState(0);
+  // const [categories, setCategories] = useState<Category[]>([]);
+  // const [articles, setArticles] = useState<Article[]>([]);
+  const dispatch = useDispatch<AppDispatch>();
+  const { articles, categories, loading, error } = useSelector(
+    (state: RootState) => state.articles
+  );
 
   useEffect(() => {
-    getCategories().then(setCategories);
-    getArticles().then(setArticles);
-    console.log(articles);
-    console.log(categories);
+    dispatch(fetchArticles());
+    dispatch(fetchCategories());
   }, []);
 
   const filteredArticles =
-    selectedCategory === "כל הנושאים"
+    selectedCategory === 0
       ? articles
-      : articles.filter((article) => article.category === selectedCategory);
+      : articles.filter((article) => article.categoryId === selectedCategory);
 
   return (
     <div className="min-h-screen pt-20 bg-gradient-to-br from-gray-50/70 via-white to-gray-100/70">

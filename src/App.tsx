@@ -5,12 +5,11 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { RouterProvider } from "react-router-dom";
 import { myRouter } from "./Router";
 import { Provider } from "react-redux";
-import { store } from "./store/store";
+import { store } from "@/store/store";
 
 const queryClient = new QueryClient();
 
 const App = () => (
-  <Provider store={store}>
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
@@ -18,7 +17,7 @@ const App = () => (
       <RouterProvider router={myRouter} />
     </TooltipProvider>
   </QueryClientProvider>
-  </Provider>
+
 );
 
 export default App;
