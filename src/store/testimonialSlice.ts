@@ -1,8 +1,7 @@
-// store/slices/testimonialSlice.ts
-import { Testimonial } from '@/types/Testimonial';
+import { Testimonial } from '@/types/TestimonialType';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-const BASE_URL = 'https://healthapplicationserver.onrender.com/api';
+const BASE_URL = import.meta.env.VITE_API_URL;
 export const fetchTestimonials = createAsyncThunk(
   'testimonials/fetch',
   async () => {

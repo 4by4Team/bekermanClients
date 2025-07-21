@@ -8,17 +8,13 @@ import { myRouter } from "./Router";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
 
-const queryClient = new QueryClient();
-
 const App = () => (
   <Provider store={store}>
-  <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
       <Sonner />
       <RouterProvider router={myRouter} />
     </TooltipProvider>
-  </QueryClientProvider>
   </Provider>
 );
 
