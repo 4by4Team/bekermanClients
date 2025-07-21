@@ -2,6 +2,8 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { Article, Category } from "../types/article.type";
 import axios from "axios";
 
+
+const BASE_URL = import.meta.env.VITE_API_URL;
 interface ArticlesState {
   articles: Article[];
   categories: Category[];
@@ -19,7 +21,7 @@ const initialState: ArticlesState = {
 export const fetchArticles = createAsyncThunk<Article[]>(
   "articles/fetchArticles",
   async () => {
-    const response = await axios.get("/api/articles");
+    const response = await axios.get(`${BASE_URL}/articles`);
     return response.data;
   }
 );
@@ -27,7 +29,7 @@ export const fetchArticles = createAsyncThunk<Article[]>(
 export const fetchCategories = createAsyncThunk<Category[]>(
   "articles/fetchCategories",
   async () => {
-    const response = await axios.get("/api/categories");
+    const response = await axios.get(`${BASE_URL}/categories`);
     return response.data;
   }
 );

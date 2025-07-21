@@ -19,17 +19,14 @@ import NotFound from "./pages/NotFound";
 import { Provider } from "react-redux";
 import { store } from "@/store/store";
 
-const queryClient = new QueryClient();
-
 const App = () => (
-  <QueryClientProvider client={queryClient}>
+  <Provider store={store}>
     <TooltipProvider>
       <Toaster />
       <Sonner />
       <RouterProvider router={myRouter} />
     </TooltipProvider>
-  </QueryClientProvider>
-
+  </Provider>
 );
 
 export default App;

@@ -3,10 +3,12 @@ import { Testimonial } from "@/types/Testimonial";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+const BASE_URL = import.meta.env.VITE_API_URL;
+
 export const fetchTestimonials = createAsyncThunk(
   "testimonials/fetch",
   async () => {
-    const res = await axios.get<Testimonial[]>("/api/testimonials");
+    const res = await axios.get<Testimonial[]>(`${BASE_URL}/testimonials`);
     return res.data;
   }
 );
