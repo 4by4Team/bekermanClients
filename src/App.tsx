@@ -7,8 +7,6 @@ import { myRouter } from "./Router";
 import { Provider } from "react-redux";
 import { store } from "@/store/store";
 
-const queryClient = new QueryClient();
-
 const App = () => (
   <Provider store={store}>
     <TooltipProvider>
