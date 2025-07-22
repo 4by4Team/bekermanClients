@@ -29,7 +29,7 @@ export interface Course {
   id: number;
   title: string;
   description: string;
-  image: string;
+  backgroundUrl: string;
   duration: string;
   price: number;
   isFree?: boolean;
