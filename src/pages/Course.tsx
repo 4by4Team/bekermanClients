@@ -1,11 +1,24 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Clock, Users, Star, CheckCircle2, Calendar, Award, Play } from 'lucide-react';
+import { fetchCourseById } from '@/store/coursesSlice';
 
 const Course = () => {
   const { id } = useParams();
+  const dispatch = useAppDispatch();
+  const { selectedCourse: course, loading, error } = useAppSelector((state) => state.courses);
+
+  useEffect(() => {
+    if (id) {
+      dispatch(fetchCourseById(id));
+    }
+  }, [dispatch, id]);
+
+  if (loading) return <div>טוען...</div>;
+  if (error) return <div>שגיאה: {error}</div>;
+  if (!course) return <div>קורס לא נמצא</div>;
 
   // Mock course data - in real app this would come from API
   const course = {
@@ -142,36 +155,17 @@ const Course = () => {
         </div>
       </section>
 
-      {/* Course Curriculum */}
-      <section className="container mx-auto px-4 mb-16">
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-white rounded-2xl shadow-lg p-8">
-            <h2 className="text-3xl font-bold text-gray-800 mb-8">תכנית הלימודים</h2>
-            <div className="space-y-6">
-              {course.curriculum.map((week, index) => (
-                <div key={week.week} className="border-r-4 border-emerald-500 pr-6 hover:bg-gray-50 transition-colors duration-300 p-4 rounded-l-lg">
-                  <div className="flex items-center mb-3">
-                    <Calendar className="w-5 h-5 text-emerald-600 ml-2" />
-                    <h3 className="text-xl font-semibold text-gray-800">
-                      שבוע {week.week}: {week.title}
-                    </h3>
-                  </div>
-                  <ul className="space-y-2">
-                    {week.topics.map((topic, topicIndex) => (
-                      <li key={topicIndex} className="flex items-center text-gray-700">
-                        <Play className="w-4 h-4 text-violet-500 ml-2 flex-shrink-0" />
-                        <span>{topic}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+     
     </div>
   );
 };
 
 export default Course;
+function useAppDispatch() {
+  throw new Error('Function not implemented.');
+}
+
+function useAppSelector(arg0: (state: any) => any): { selectedCourse: any; loading: any; error: any; } {
+  throw new Error('Function not implemented.');
+}
+
