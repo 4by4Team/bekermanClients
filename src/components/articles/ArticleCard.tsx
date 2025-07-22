@@ -1,12 +1,9 @@
-import React, { memo } from "react";
+import { memo } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { User, Clock, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Article } from "@/types/article.type";
-
-
-
 
 const ArticleImage = memo(
   ({
