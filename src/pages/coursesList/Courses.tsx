@@ -1,22 +1,3 @@
-// // export default Courses;
-// מבנה קבצים מומלץ (לפי הכללים שלך):
-// src/components/Courses/
-// ├── Courses.tsx ← קומפוננטת עמוד ראשית
-// ├── LearningPathsTabs.tsx ← Tabs של מסלולי לימוד
-// ├── CoursesGrid.tsx ← גריד של קורסים
-// ├── CourseCard.tsx ← כרטיס בודד
-// ├── StatsSection.tsx ← אזור סטטיסטיקות
-// ├── HeroSection.tsx ← אזור ההירו העליון
-// ├── PurchaseInfoSection.tsx ← איך זה עובד
-// ├── BenefitsSection.tsx ← למה לבחור בנו
-// ├── FaqSection.tsx ← שאלות ותשובות
-// ├── CtaSection.tsx ← CTA אחרון
-// └── hooks/useCoursesLogic.ts ← ניהול state + פונקציות
-// types/
-// └── course.types.ts ← טיפוסים
-
-// נתחיל מ-Courses.tsx – הרכיב הראשי שמזמן את כל הסקשנים
-
 import { CreditCard, FileText, Headphones, Minus, Plus } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -164,37 +145,49 @@ const FaqSection = () => {
 
   return (
     <section className="py-16 bg-gradient-to-br from-white to-gray-50/50">
-      <div className="container mx-auto px-4">
-        <div className="space-y-4">
-          {faqs.map((faq, index) => (
-            <div
-              key={index}
-              className={`bg-white/70 backdrop-blur-sm rounded-2xl border overflow-hidden transition-all duration-300 ${
-                openFaq === index
-                  ? "border-emerald-300/60 shadow-xl shadow-emerald-100/50 ring-1 ring-emerald-200/50"
-                  : "border-gray-200/60 shadow-lg hover:shadow-xl"
-              }`}
-            >
-              <button
-                onClick={() => setOpenFaq(openFaq === index ? null : index)}
-                className="w-full p-6 text-right flex items-center justify-between hover:bg-white/30 transition-colors"
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold mb-4 text-gray-800">
+              שאלות נפוצות
+            </h2>
+            <p className="text-lg text-gray-600">
+              תשובות לשאלות הנפוצות ביותר על הקורסים שלנו
+            </p>
+          </div>
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <div
+                key={index}
+                className={`bg-white/70 backdrop-blur-sm rounded-2xl border overflow-hidden transition-all duration-300 ${
+                  openFaq === index
+                    ? "border-emerald-300/60 shadow-xl shadow-emerald-100/50 ring-1 ring-emerald-200/50"
+                    : "border-gray-200/60 shadow-lg hover:shadow-xl"
+                }`}
               >
-                <h3 className="text-lg font-semibold text-gray-800">
-                  {faq.question}
-                </h3>
-                {openFaq === index ? (
-                  <Minus className="w-5 h-5 text-emerald-600 flex-shrink-0 mr-4" />
-                ) : (
-                  <Plus className="w-5 h-5 text-emerald-600 flex-shrink-0 mr-4" />
+                <button
+                  onClick={() => setOpenFaq(openFaq === index ? null : index)}
+                  className="w-full p-6 text-right flex items-center justify-between hover:bg-white/30 transition-colors"
+                >
+                  <h3 className="text-lg font-semibold text-gray-800">
+                    {faq.question}
+                  </h3>
+                  {openFaq === index ? (
+                    <Minus className="w-5 h-5 text-emerald-600 flex-shrink-0 mr-4" />
+                  ) : (
+                    <Plus className="w-5 h-5 text-emerald-600 flex-shrink-0 mr-4" />
+                  )}
+                </button>
+                {openFaq === index && (
+                  <div className="px-6 pb-6 animate-fade-in">
+                    <p className="text-gray-600 leading-relaxed">
+                      {faq.answer}
+                    </p>
+                  </div>
                 )}
-              </button>
-              {openFaq === index && (
-                <div className="px-6 pb-6 animate-fade-in">
-                  <p className="text-gray-600 leading-relaxed">{faq.answer}</p>
-                </div>
-              )}
-            </div>
-          ))}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -218,7 +211,7 @@ const Courses = () => {
     <div className="min-h-screen pt-20 bg-gradient-to-br from-gray-50 via-white to-gray-100">
       <HeroSection />
       <HowItWorkSection />
-      
+
       {loading && <div className="text-center my-4">טוען קורסים...</div>}
       {error && <div className="text-center text-red-500 my-4">{error}</div>}
       {!loading && !error && (
