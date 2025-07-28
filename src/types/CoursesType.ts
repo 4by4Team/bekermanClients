@@ -1,4 +1,3 @@
-
 // export type LearningPathKey = 'nutrition' | 'fitness' | 'wellness';
 
 import { LucideIcon } from "lucide-react";
@@ -23,16 +22,20 @@ import { LucideIcon } from "lucide-react";
 
 // export type LearningPathsMap = Record<LearningPathKey, LearningPath>;
 // סוגי מסלולים אפשריים – אופציונלי אם יש לך מפתחות קבועים
-export type LearningPathKey = 'nutrition' | 'therapy' | 'wellness';
+export type LearningPathKey = "nutrition" | "therapy" | "wellness";
 
 export interface Course {
   id: number;
   title: string;
   description: string;
   backgroundUrl: string;
-  duration: string;
   price: number;
-  isFree?: boolean;
+  linkToCourse: string;
+  createdAt: string;
+  createdBy: string;
+  updatedAt: string;
+  updatedBy: string;
+  students: number;
 }
 
 export interface LearningPath {
@@ -63,5 +66,5 @@ export interface FaqItem {
 export interface Benefit {
   title: string;
   desc: string;
-  icon:LucideIcon;
+  icon: LucideIcon;
 }
