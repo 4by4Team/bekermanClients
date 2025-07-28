@@ -15,6 +15,7 @@ export const fetchCourses = createAsyncThunk(
 export const fetchCourseById = createAsyncThunk(
   'courses/fetchById',
   async (id: string) => {
+    console.log(id, BASE_URL);
     const res = await axios.get<Course>(`${BASE_URL}/courses/${id}`);
     return res.data;
   }
