@@ -21,6 +21,30 @@ export const fetchCourseById = createAsyncThunk(
   }
 );
 
+export const createCourse = createAsyncThunk(
+  'courses/create',
+  async (newCourse: Omit<Course, 'id' | 'createdAt' | 'updatedAt'>) => {
+    const res = await axios.post<Course>(`${BASE_URL}/courses`, newCourse);
+    return res.data;
+  }
+);
+
+export const updateCourse = createAsyncThunk(
+  'courses/update',
+  async ({ id, data }: { id: number; data: Partial<Course> }) => {
+    const res = await axios.put<Course>(`${BASE_URL}/courses/${id}`, data);
+    return res.data;
+  }
+);
+
+export const deleteCourse = createAsyncThunk(
+  'courses/delete',
+  async (id: number) => {
+    await axios.delete(`${BASE_URL}/courses/${id}`);
+    return id;
+  }
+);
+
 interface CoursesState {
   data: Course[];
   selectedCourse: Course | null;
@@ -66,7 +90,54 @@ const coursesSlice = createSlice({
         state.loading = false;
         state.error = action.error.message || 'שגיאה בעת שליפת קורס';
         state.selectedCourse = null;
+      })
+      .addCase(createCourse.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(createCourse.fulfilled, (state, action) => {
+        state.loading = false;
+        state.data.push(action.payload);
+      })
+      .addCase(createCourse.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || 'שגיאה בעת יצירת קורס';
+      })// Update course
+      .addCase(updateCourse.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateCourse.fulfilled, (state, action) => {
+        state.loading = false;
+        const index = state.data.findIndex(c => c.id === action.payload.id);
+        if (index !== -1) {
+          state.data[index] = action.payload;
+        }
+        // optional: also update selectedCourse if it's the same
+        if (state.selectedCourse?.id === action.payload.id) {
+          state.selectedCourse = action.payload;
+        }
+      })
+      .addCase(updateCourse.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || 'שגיאה בעת עדכון קורס';
+      })
+      .addCase(deleteCourse.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(deleteCourse.fulfilled, (state, action) => {
+        state.loading = false;
+        state.data = state.data.filter(course => course.id !== action.payload);
+        if (state.selectedCourse?.id === action.payload) {
+          state.selectedCourse = null;
+        }
+      })
+      .addCase(deleteCourse.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || 'שגיאה בעת מחיקת קורס';
       });
+    ;
   },
 });
 

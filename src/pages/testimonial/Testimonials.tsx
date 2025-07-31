@@ -54,11 +54,10 @@ const renderPagination = (
           <button
             key={page}
             onClick={() => onPageChange(page)}
-            className={`w-10 h-10 rounded-full transition-all duration-300 backdrop-blur-sm ${
-              currentPage === page
+            className={`w-10 h-10 rounded-full transition-all duration-300 backdrop-blur-sm ${currentPage === page
                 ? 'bg-gradient-to-r from-emerald-400/80 to-violet-400/80 text-white shadow-lg'
                 : 'bg-gradient-to-r from-white/90 to-gray-50/80 border border-gray-300/60 text-gray-600 hover:border-emerald-400 hover:text-emerald-600'
-            }`}
+              }`}
           >
             {page}
           </button>
