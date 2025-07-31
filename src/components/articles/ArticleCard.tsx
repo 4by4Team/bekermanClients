@@ -9,11 +9,11 @@ const ArticleImage = memo(
   ({
     image,
     title,
-    categoryId,
+    categoryName,
   }: {
     image: string;
     title: string;
-    categoryId: number;
+    categoryName: string;
   }) => (
     <div className="md:w-1/3 relative overflow-hidden">
       <img
@@ -23,7 +23,7 @@ const ArticleImage = memo(
       />
       <div className="absolute inset-0 bg-gradient-to-t from-gray-900/20 via-transparent to-transparent"></div>
       <div className="absolute top-4 right-4 bg-gradient-to-r from-white/95 via-gray-50/98 to-white/95 backdrop-blur-sm rounded-full px-3 py-1 text-sm font-medium text-violet-700 border border-violet-200/60">
-        {categoryId}
+        {categoryName}
       </div>
       <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-400/70 to-violet-500/70"></div>
     </div>
@@ -79,7 +79,7 @@ export const ArticleCard = memo(({ article, index }: ArticleCardProps) => (
       <ArticleImage
         image={article.backgroundUrl}
         title={article.title}
-        categoryId={article.categoryId}
+        categoryName={article.category?.categoryName || 'ללא קטגוריה'}
       />
       <div className="md:w-2/3 flex flex-col justify-between">
         <CardContent className="p-6 bg-gradient-to-br from-white/80 via-gray-50/30 to-white/80 flex-1">

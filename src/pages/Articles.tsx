@@ -63,7 +63,7 @@ const Sidebar = memo(
             <span className="font-medium">כל הנושאים</span>
           </div>
         </button>
-        {categories.map((category:Category) => {
+        {categories.map((category: Category) => {
           return (
             <button
               key={category.id}
@@ -73,9 +73,9 @@ const Sidebar = memo(
                 : "hover:bg-gradient-to-r hover:from-gray-50/80 hover:to-violet-50/40 text-gray-700 hover:text-violet-700 bg-gradient-to-r from-gray-50/50 to-white/80 border border-gray-100/60"
                 }`}
             >
-              {/* <span className="text-sm font-medium bg-white/20 rounded-full px-2 py-1">
+              <span className="text-sm font-medium bg-white/20 rounded-full px-2 py-1">
                 {category.count}
-              </span> */}
+              </span>
               <div className="flex items-center space-x-3 rtl:space-x-reverse">
                 <span className="font-medium">{category.categoryName}</span>
               </div>
@@ -91,18 +91,35 @@ interface ArticlesGridProps {
   selectedCategory: {
     id: number;
     name: string;
+    count: number;
   };
 }
+//
+// Unexpected Application Error!
+// Cannot read properties of undefined (reading 'categoryName')
+// TypeError: Cannot read properties of undefined (reading 'categoryName')
+//     at _c5 (http://localhost:8080/src/components/articles/ArticleCard.tsx:310:52)
+//     at renderWithHooks (http://localhost:8080/node_modules/.vite/deps/chunk-QT63QQJV.js?v=e8792281:11548:26)
+//     at updateFunctionComponent (http://localhost:8080/node_modules/.vite/deps/chunk-QT63QQJV.js?v=e8792281:14582:28)
+//     at updateSimpleMemoComponent (http://localhost:8080/node_modules/.vite/deps/chunk-QT63QQJV.js?v=e8792281:14463:18)
+//     at updateMemoComponent (http://localhost:8080/node_modules/.vite/deps/chunk-QT63QQJV.js?v=e8792281:14366:22)
+//     at beginWork (http://localhost:8080/node_modules/.vite/deps/chunk-QT63QQJV.js?v=e8792281:15977:22)
+//     at beginWork$1 (http://localhost:8080/node_modules/.vite/deps/chunk-QT63QQJV.js?v=e8792281:19753:22)
+//     at performUnitOfWork (http://localhost:8080/node_modules/.vite/deps/chunk-QT63QQJV.js?v=e8792281:19198:20)
+//     at workLoopSync (http://localhost:8080/node_modules/.vite/deps/chunk-QT63QQJV.js?v=e8792281:19137:13)
+//     at renderRootSync (http://localhost:8080/node_modules/.vite/deps/chunk-QT63QQJV.js?v=e8792281:19116:15)
+// 💿 Hey developer 👋
 
+// You can provide a way better UX than this when your app throws errors by providing your own ErrorBoundary or errorElement prop on your route.
 
 const ArticlesGrid = memo(
   ({ articles, selectedCategory }: ArticlesGridProps) => (
     <div className="lg:w-3/4">
       <div className="mb-6">
-          <h2 className="text-2xl font-bold text-gray-800">
-            {selectedCategory.name}
-          </h2>
-        <p className="text-gray-600">{articles.length} מאמרים נמצאו</p>
+        <h2 className="text-2xl font-bold text-gray-800">
+          {selectedCategory.name}
+        </h2>
+        <p className="text-gray-600">{selectedCategory.count} מאמרים נמצאו</p>
       </div>
       <div className="space-y-6">
         {articles.map((article, index) => (
@@ -114,9 +131,10 @@ const ArticlesGrid = memo(
 );
 
 const Articles = () => {
-  const [selectedCategory, setSelectedCategory] = useState<{ id: number; name: string }>({
+  const [selectedCategory, setSelectedCategory] = useState<{ id: number; name: string; count: number }>({
     id: 0,
     name: "כל הנושאים",
+    count: 0,
   });
   const dispatch = useDispatch<AppDispatch>();
   const { articles, categories, articlesByCategory } = useSelector(
@@ -126,21 +144,21 @@ const Articles = () => {
     dispatch(fetchArticles());
     dispatch(fetchCategories());
   }, [dispatch]);
-const handleCategoryClick = (id: number) => {
-  if (id === 0) {
-    setSelectedCategory({ id: 0, name: "כל הנושאים" });
-    dispatch(fetchArticles());
-  } else {
-    // אם עדיין אין קטגוריות - חכה רגע
-    if (!categories || categories.length === 0) return;
+  const handleCategoryClick = (id: number) => {
+    if (id === 0) {
+      setSelectedCategory({ id: 0, name: "כל הנושאים", count: articles.length });
+      dispatch(fetchArticles());
+    } else {
+      // אם עדיין אין קטגוריות - חכה רגע
+      if (!categories || categories.length === 0) return;
 
-    const selected = categories.find((c) => c.id === id);
-    if (selected) {
-      setSelectedCategory({ id: selected.id, name: selected.categoryName });
-      dispatch(fetchArticleByCategory(id));
+      const selected = categories.find((c) => c.id === id);
+      if (selected) {
+        setSelectedCategory({ id: selected.id, name: selected.categoryName, count: selected.count });
+        dispatch(fetchArticleByCategory(id));
+      }
     }
-  }
-};
+  };
 
 
   return (

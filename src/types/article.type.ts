@@ -5,6 +5,8 @@
 //   icon?: string; // icon will be handled as a string name or URL from backend, not as a component
 // }
 
+import { Category } from "./category.type";
+
 // // export interface Article {
 // //   id: number;
 // //   title: string;
@@ -25,4 +27,5 @@ export interface Article {
   createdBy: string;
   createdAt: Date;
   updatedAt: Date;
+  category:Category;
 }
