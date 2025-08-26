@@ -16,7 +16,7 @@ const HeroSection = () => {
       <div className="container mx-auto px-4 relative">
         <div className="text-center mb-16 animate-fade-in-up">
           <h1 className="text-6xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-emerald-500/80 via-violet-500/80 to-gray-600/80 bg-clip-text text-transparent">
-            מסלולי לימוד את חייך
+            קורסים מקצועיים
           </h1>
           <p className="text-2xl text-gray-600 mb-8 max-w-4xl mx-auto leading-relaxed">
             קורסים מקצועיים בתזונה ובריאות שיעניקו לך כלים מעשיים לחיים טובים
