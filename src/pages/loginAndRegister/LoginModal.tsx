@@ -5,6 +5,9 @@ import { Modal } from "./Modal";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { useDispatch } from "react-redux";
+import type { AppDispatch } from "@/store/store";
+import { login } from "@/store/authSlice";
 
 const loginSchema = z.object({
   email: z.string().email("כתובת אימייל לא תקינה"),
@@ -17,13 +20,19 @@ interface LoginModalProps {
 }
 
 export const LoginModal = ({ isOpen, onClose }: LoginModalProps) => {
+  const dispatch = useDispatch<AppDispatch>();
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: { email: "", password: "" },
   });
 
   const onSubmit = (data: z.infer<typeof loginSchema>) => {
-    console.log("Login data:", data);
+    dispatch(login({ email: data.email, password: data.password }));
+    onClose();
+  };
+
+  const handleGoogleLogin = () => {
+    window.open("/api/auth/google", "_self");
     onClose();
   };
 
@@ -70,7 +79,7 @@ export const LoginModal = ({ isOpen, onClose }: LoginModalProps) => {
         <Button
           variant="outline"
           className="mt-4 w-full"
-          onClick={() => alert("Login with Google")}
+          onClick={handleGoogleLogin}
         >
           התחבר עם Google
         </Button>

@@ -5,6 +5,10 @@ import { Modal } from "./Modal";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { useDispatch } from "react-redux"; // הוסף למעלה
+import { register } from "@/store/authSlice"; // ודא שהנתיב נכון
+import type { AppDispatch } from "@/store/store"; // ודא שהנתיב נכון
+
 
 const registerSchema = z.object({
   firstName: z.string().min(2, 'שם פרטי חייב להכיל לפחות 2 תווים'),
@@ -19,8 +23,9 @@ interface RegisterModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
-
 export const RegisterModal = ({ isOpen, onClose }: RegisterModalProps) => {
+  const dispatch = useDispatch<AppDispatch>();
+
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
     defaultValues: { firstName: "", lastName: "", email: "", phone: "", tz: "", password: "" },
@@ -28,6 +33,7 @@ export const RegisterModal = ({ isOpen, onClose }: RegisterModalProps) => {
 
   const onSubmit = (data: z.infer<typeof registerSchema>) => {
     console.log("Register data:", data);
+    dispatch(register(data));
     onClose();
   };
 
