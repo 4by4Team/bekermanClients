@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
-import { Heart } from "lucide-react";
+import { Heart, User, LogIn } from "lucide-react";
 import { useHeaderLogic } from "@/hooks/useHeaderLogic";
-
-
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import { LoginModal } from "@/pages/loginAndRegister/LoginModal";
+import { RegisterModal } from "@/pages/loginAndRegister/RegisterModal";
 
 function LogoSection() {
   return (
@@ -16,7 +18,6 @@ function LogoSection() {
     </div>
   );
 }
-
 
 function NavLinksSection(props: { isActive: (path: string) => boolean; navItems: { name: string; path: string }[] }) {
   return (
@@ -41,6 +42,44 @@ function NavLinksSection(props: { isActive: (path: string) => boolean; navItems:
   );
 }
 
+// function AuthSection() {
+
+//   return (
+//     <div className="hidden lg:flex items-center space-x-3 rtl:space-x-reverse">
+//       <Button variant="ghost" size="sm" asChild>
+//         <Link to="/login" className="flex items-center space-x-1 rtl:space-x-reverse">
+//           <LogIn className="w-4 h-4" />
+//           <span>התחברות</span>
+//         </Link>
+//       </Button>
+//       <Button variant="default" size="sm" asChild>
+//         <Link to="/register" className="flex items-center space-x-1 rtl:space-x-reverse">
+//           <User className="w-4 h-4" />
+//           <span>הרשמה</span>
+//         </Link>
+//       </Button>
+//     </div>
+//   );
+// }
+
+function AuthSection({ openLogin, openRegister }: { openLogin: () => void; openRegister: () => void }) {
+  return (
+    <div className="hidden lg:flex items-center space-x-3 rtl:space-x-reverse">
+      <Button variant="ghost" size="sm" onClick={openLogin}>
+        <div className="flex items-center space-x-1 rtl:space-x-reverse">
+          <LogIn className="w-4 h-4" />
+          <span>התחברות</span>
+        </div>
+      </Button>
+      <Button variant="default" size="sm" onClick={openRegister}>
+        <div className="flex items-center space-x-1 rtl:space-x-reverse">
+          <User className="w-4 h-4" />
+          <span>הרשמה</span>
+        </div>
+      </Button>
+    </div>
+  );
+}
 
 function HamburgerSection(props: { isMenuOpen: boolean; toggleMenu: () => void }) {
   return (
@@ -51,15 +90,19 @@ function HamburgerSection(props: { isMenuOpen: boolean; toggleMenu: () => void }
         aria-label="פתח תפריט"
       >
         {props.isMenuOpen ? (
-          <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /><path d="M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>
+          <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none">
+            <path d="M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+            <path d="M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+          </svg>
         ) : (
-          <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>
+          <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none">
+            <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+          </svg>
         )}
       </button>
     </div>
   );
 }
-
 
 function MobileMenuSection(props: {
   isMenuOpen: boolean;
@@ -84,10 +127,62 @@ function MobileMenuSection(props: {
             {item.name}
           </Link>
         ))}
+
+        {/* Mobile Auth Buttons */}
+        <div className="border-t border-gray-200 pt-4 mt-4 space-y-3">
+          <Link
+            to="/login"
+            onClick={props.closeMenu}
+            className="flex items-center space-x-2 rtl:space-x-reverse px-4 py-2 text-sm font-medium text-gray-700 hover:text-primary hover:bg-gray-50 rounded-lg transition-colors"
+          >
+            <LogIn className="w-4 h-4" />
+            <span>התחברות</span>
+          </Link>
+          <Link
+            to="/register"
+            onClick={props.closeMenu}
+            className="flex items-center space-x-2 rtl:space-x-reverse px-4 py-2 text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg transition-colors"
+          >
+            <User className="w-4 h-4" />
+            <span>הרשמה</span>
+          </Link>
+        </div>
       </nav>
     </div>
   );
 }
+
+// const Header = () => {
+//   const navItems = [
+//     { name: "בית", path: "/" },
+//     { name: "אודות", path: "/about" },
+//     { name: "קורסים", path: "/courses" },
+//     { name: "מאמרים", path: "/articles" },
+//     { name: "עדויות", path: "/testimonials" },
+//   ];
+//   const { isMenuOpen, toggleMenu, closeMenu, isActive } = useHeaderLogic();
+//   return (
+//     <header className="fixed top-0 w-full z-50 glass-effect border-b border-gray-200/20">
+//       <div className="container mx-auto px-4 py-4">
+//         <div className="relative flex items-center justify-between">
+//           <LogoSection />
+//           <NavLinksSection
+//             isActive={isActive}
+//             navItems={navItems}
+//           />
+//           <AuthSection />
+//           <HamburgerSection isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
+//         </div>
+//         <MobileMenuSection
+//           isMenuOpen={isMenuOpen}
+//           closeMenu={closeMenu}
+//           isActive={isActive}
+//           navItems={navItems}
+//         />
+//       </div>
+//     </header>
+//   );
+// };
 const Header = () => {
   const navItems = [
     { name: "בית", path: "/" },
@@ -98,25 +193,33 @@ const Header = () => {
   ];
   const { isMenuOpen, toggleMenu, closeMenu, isActive } = useHeaderLogic();
 
+  // מצב לפתיחת מודאלים
+  const [isLoginOpen, setLoginOpen] = useState(false);
+  const [isRegisterOpen, setRegisterOpen] = useState(false);
+
   return (
+    <>
     <header className="fixed top-0 w-full z-50 glass-effect border-b border-gray-200/20">
       <div className="container mx-auto px-4 py-4">
-        <div className="relative flex items-center">
+        <div className="relative flex items-center justify-between">
           <LogoSection />
-          <NavLinksSection
-            isActive={isActive}
-            navItems={navItems}
-          />
+          <NavLinksSection isActive={isActive} navItems={navItems} />
+          <AuthSection openLogin={() => setLoginOpen(true)} openRegister={() => setRegisterOpen(true)} />
           <HamburgerSection isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
-          <MobileMenuSection
-            isMenuOpen={isMenuOpen}
-            closeMenu={closeMenu}
-            isActive={isActive}
-            navItems={navItems}
-          />
         </div>
+        <MobileMenuSection isMenuOpen={isMenuOpen} closeMenu={closeMenu} isActive={isActive} navItems={navItems} />
       </div>
-    </header>
+
+   </header>
+       {/* המודאלים */}
+      <LoginModal isOpen={isLoginOpen} onClose={() => setLoginOpen(false)} />
+      <RegisterModal isOpen={isRegisterOpen} onClose={() => setRegisterOpen(false)} />
+   
+   </>
+   
   );
 };
+
 export default Header;
+
+
