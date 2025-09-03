@@ -10,8 +10,17 @@ export const register = createAsyncThunk(
     async (userData: Partial<User>) => {
         console.log("Registering user with data:", userData);
         const res = await axios.post<User>(`${BASE_URL}/auth/register`, userData);
-       
-        console.log("res.data: "+res.data);
+        console.log("res.data: ", res.data);
+        if (res.data && (res.data as any).token) {
+            sessionStorage.setItem('token', (res.data as any).token);
+        }
+        // if (res.data && (res.data as any).firstName) {
+        //     sessionStorage.setItem('firstName', (res.data as any).firstName);
+        // }
+        const firstName = (res.data as any).user?.firstName;
+        if (firstName) {
+            sessionStorage.setItem('firstName', firstName);
+        }
         return res.data;
     }
 );
@@ -20,9 +29,19 @@ export const login = createAsyncThunk(
     'auth/login',
     async ({ email, password }: { email: string; password: string }) => {
         const res = await axios.post<User>(`${BASE_URL}/auth/login`, { email, password });
+        console.log("res.data: ", res.data);
+        if (res.data && (res.data as any).token) {
+            sessionStorage.setItem('token', (res.data as any).token);
+        }
+        const firstName = (res.data as any).user?.firstName;
+        if (firstName) {
+            sessionStorage.setItem('firstName', firstName);
+        }
+
         return res.data;
     }
 );
+
 
 export const changePassword = createAsyncThunk(
     'auth/changePassword',
