@@ -1,13 +1,17 @@
 import { User } from '@/types/userType';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { log } from 'console';
 
 const BASE_URL = import.meta.env.VITE_API_URL;
 
 export const register = createAsyncThunk(
     'auth/register',
     async (userData: Partial<User>) => {
+        console.log("Registering user with data:", userData);
         const res = await axios.post<User>(`${BASE_URL}/auth/register`, userData);
+       
+        console.log("res.data: "+res.data);
         return res.data;
     }
 );

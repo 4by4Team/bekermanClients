@@ -33,7 +33,10 @@ export const RegisterModal = ({ isOpen, onClose }: RegisterModalProps) => {
 
   const onSubmit = (data: z.infer<typeof registerSchema>) => {
     console.log("Register data:", data);
+    
     dispatch(register(data));
+    console.log("Dispatched register action");
+    
     onClose();
   };
 
