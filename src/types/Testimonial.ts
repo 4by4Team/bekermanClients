@@ -3,7 +3,8 @@ export interface Testimonial {
     title: string;
     summary: string;
     youtubeId: string;
-    // createdAt: string;
+    createdBy: string;
+    updatedBy?: string;
     colorTheme?: 'emerald' | 'violet';
   }
   

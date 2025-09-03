@@ -4,7 +4,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Course } from "@/types/CoursesType";
-
 interface CourseCardProps {
   course: Course;
   themeColor: string;
