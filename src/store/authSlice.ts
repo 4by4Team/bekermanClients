@@ -14,9 +14,6 @@ export const register = createAsyncThunk(
         if (res.data && (res.data as any).token) {
             sessionStorage.setItem('token', (res.data as any).token);
         }
-        // if (res.data && (res.data as any).firstName) {
-        //     sessionStorage.setItem('firstName', (res.data as any).firstName);
-        // }
         const firstName = (res.data as any).user?.firstName;
         if (firstName) {
             sessionStorage.setItem('firstName', firstName);
@@ -37,7 +34,6 @@ export const login = createAsyncThunk(
         if (firstName) {
             sessionStorage.setItem('firstName', firstName);
         }
-
         return res.data;
     }
 );

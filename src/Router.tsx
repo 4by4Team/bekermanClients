@@ -10,6 +10,7 @@ import NotFound from "./pages/NotFound";
 import AppLayout from "./AppLayout";
 import Testimonials from "./pages/testimonial/Testimonials";
 import Article from "./components/articles/Article";
+import GoogleCallback from "./pages/loginAndRegister/GoogleCallback";
 
 export const myRouter = createBrowserRouter([
   {
@@ -43,6 +44,10 @@ export const myRouter = createBrowserRouter([
       {
         path: "/course/:id/register",
         element: <CourseRegistration />,
+      },
+      {
+        path: "/auth/google/callback",
+        element: <GoogleCallback />,
       },
       {
         path: "/testimonials",
