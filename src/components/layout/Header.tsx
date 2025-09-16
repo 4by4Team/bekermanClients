@@ -1,8 +1,191 @@
+// import { Link } from "react-router-dom";
+// import { Heart, User, LogIn } from "lucide-react";
+// import { useHeaderLogic } from "@/hooks/useHeaderLogic";
+// import { Button } from "@/components/ui/button";
+// import { useState } from "react";
+// import { LoginModal } from "@/pages/loginAndRegister/LoginModal";
+// import { RegisterModal } from "@/pages/loginAndRegister/RegisterModal";
+
+// function LogoSection() {
+//   return (
+//     <div className="flex-shrink-0 min-w-[140px] flex justify-start">
+//       <Link to="/" className="flex items-center space-x-2 rtl:space-x-reverse">
+//         <div className="w-10 h-10 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center">
+//           <Heart className="w-6 h-6 text-white" />
+//         </div>
+//         <span className="text-2xl font-bold text-gradient whitespace-nowrap">חיים בריאים</span>
+//       </Link>
+//     </div>
+//   );
+// }
+
+// function NavLinksSection(props: { isActive: (path: string) => boolean; navItems: { name: string; path: string }[] }) {
+//   return (
+//     <nav className="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 px-[100px] space-x-8 rtl:space-x-reverse transition-all duration-300">
+//       {props.navItems.map((item) => (
+//         <Link
+//           key={item.path}
+//           to={item.path}
+//           aria-current={props.isActive(item.path) ? "page" : undefined}
+//           className={`relative px-3 py-2 text-sm font-medium transition-all duration-300 hover:text-primary ${props.isActive(item.path) ? "text-primary" : "text-gray-700 hover:text-primary"
+//             }`}
+//         >
+//           {item.name}
+//           {props.isActive(item.path) && (
+//             <div className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-primary to-secondary rounded-full" />
+//           )}
+//         </Link>
+//       ))}
+//     </nav>
+//   );
+// }
+
+// function AuthSection({ openLogin, openRegister }: { openLogin: () => void; openRegister: () => void }) {
+//   return (
+//     <div className="hidden lg:flex items-center space-x-3 rtl:space-x-reverse">
+//       <Button variant="ghost" size="sm" onClick={openLogin}>
+//         <div className="flex items-center space-x-1 rtl:space-x-reverse">
+//           <LogIn className="w-4 h-4" />
+//           <span>התחברות</span>
+//         </div>
+//       </Button>
+//       <Button variant="default" size="sm" onClick={openRegister}>
+//         <div className="flex items-center space-x-1 rtl:space-x-reverse">
+//           <User className="w-4 h-4" />
+//           <span>הרשמה</span>
+//         </div>
+//       </Button>
+//     </div>
+//   );
+// }
+
+// function HamburgerSection(props: { isMenuOpen: boolean; toggleMenu: () => void }) {
+//   return (
+//     <div className="flex lg:hidden">
+//       <button
+//         onClick={props.toggleMenu}
+//         className="p-2 rounded-lg hover:bg-gray-100 transition-colors absolute left-4 top-1/2 -translate-y-1/2"
+//         aria-label="פתח תפריט"
+//       >
+//         {props.isMenuOpen ? (
+//           <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none">
+//             <path d="M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+//             <path d="M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+//           </svg>
+//         ) : (
+//           <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none">
+//             <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+//           </svg>
+//         )}
+//       </button>
+//     </div>
+//   );
+// }
+
+// function MobileMenuSection(props: {
+//   isMenuOpen: boolean;
+//   closeMenu: () => void;
+//   isActive: (path: string) => boolean;
+//   navItems: { name: string; path: string }[];
+//   openLogin: () => void;
+//   openRegister: () => void;
+// }) {
+//   if (!props.isMenuOpen) return null;
+//   return (
+//     <div className="lg:hidden mt-4 py-4 border-t border-gray-200">
+//       <nav className="flex flex-col space-y-4">
+//         {props.navItems.map((item) => (
+//           <Link
+//             key={item.path}
+//             to={item.path}
+//             onClick={props.closeMenu}
+//             className={`px-4 py-2 text-sm font-medium transition-colors ${props.isActive(item.path)
+//                 ? "text-primary bg-primary/10 rounded-lg"
+//                 : "text-gray-700 hover:text-primary hover:bg-gray-50 rounded-lg"
+//               }`}
+//           >
+//             {item.name}
+//           </Link>
+//         ))}
+
+//         {/* Mobile Auth Buttons */}
+//         <div className="border-t border-gray-200 pt-4 mt-4 space-y-3">
+//           <button
+//             onClick={() => {
+//               props.closeMenu();
+//               props.openLogin();
+//             }}
+//             className="w-full flex items-center space-x-2 rtl:space-x-reverse px-4 py-2 text-sm font-medium text-gray-700 hover:text-primary hover:bg-gray-50 rounded-lg transition-colors"
+//           >
+//             <LogIn className="w-4 h-4" />
+//             <span>התחברות</span>
+//           </button>
+//           <button
+//             onClick={() => {
+//               props.closeMenu();
+//               props.openRegister();
+//             }}
+//             className="w-full flex items-center space-x-2 rtl:space-x-reverse px-4 py-2 text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg transition-colors"
+//           >
+//             <User className="w-4 h-4" />
+//             <span>הרשמה</span>
+//           </button>
+//         </div>
+//       </nav>
+//     </div>
+//   );
+// }
+
+// const Header = () => {
+//   const navItems = [
+//     { name: "בית", path: "/" },
+//     { name: "אודות", path: "/about" },
+//     { name: "קורסים", path: "/courses" },
+//     { name: "מאמרים", path: "/articles" },
+//     { name: "עדויות", path: "/testimonials" },
+//   ];
+//   const { isMenuOpen, toggleMenu, closeMenu, isActive } = useHeaderLogic();
+
+//   const [isLoginOpen, setLoginOpen] = useState(false);
+//   const [isRegisterOpen, setRegisterOpen] = useState(false);
+
+//   return (
+//     <>
+//       <header className="fixed top-0 w-full z-50 glass-effect border-b border-gray-200/20">
+//         <div className="container mx-auto px-4 py-4">
+//           <div className="relative flex items-center justify-between">
+//             <LogoSection />
+//             <NavLinksSection isActive={isActive} navItems={navItems} />
+//             <AuthSection openLogin={() => setLoginOpen(true)} openRegister={() => setRegisterOpen(true)} />
+//             <HamburgerSection isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
+//           </div>
+//           <MobileMenuSection
+//             isMenuOpen={isMenuOpen}
+//             closeMenu={closeMenu}
+//             isActive={isActive}
+//             navItems={navItems}
+//             openLogin={() => setLoginOpen(true)}
+//             openRegister={() => setRegisterOpen(true)}
+//           />
+//         </div>
+//       </header>
+
+//       {/* המודאלים */}
+//       <LoginModal isOpen={isLoginOpen} onClose={() => setLoginOpen(false)} />
+//       <RegisterModal isOpen={isRegisterOpen} onClose={() => setRegisterOpen(false)} />
+//     </>
+//   );
+// };
+
+// export default Header;
+
 import { Link } from "react-router-dom";
-import { Heart } from "lucide-react";
+import { Heart, User, LogIn } from "lucide-react";
 import { useHeaderLogic } from "@/hooks/useHeaderLogic";
-
-
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import { LoginModal } from "@/pages/loginAndRegister/LoginModal";
+import { RegisterModal } from "@/pages/loginAndRegister/RegisterModal";
 
 function LogoSection() {
   return (
@@ -17,7 +200,6 @@ function LogoSection() {
   );
 }
 
-
 function NavLinksSection(props: { isActive: (path: string) => boolean; navItems: { name: string; path: string }[] }) {
   return (
     <nav className="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 px-[100px] space-x-8 rtl:space-x-reverse transition-all duration-300">
@@ -26,10 +208,9 @@ function NavLinksSection(props: { isActive: (path: string) => boolean; navItems:
           key={item.path}
           to={item.path}
           aria-current={props.isActive(item.path) ? "page" : undefined}
-          className={`relative px-3 py-2 text-sm font-medium transition-all duration-300 hover:text-primary ${props.isActive(item.path)
-            ? "text-primary"
-            : "text-gray-700 hover:text-primary"
-            }`}
+          className={`relative px-3 py-2 text-sm font-medium transition-all duration-300 hover:text-primary ${
+            props.isActive(item.path) ? "text-primary" : "text-gray-700 hover:text-primary"
+          }`}
         >
           {item.name}
           {props.isActive(item.path) && (
@@ -41,6 +222,39 @@ function NavLinksSection(props: { isActive: (path: string) => boolean; navItems:
   );
 }
 
+function AuthSection({ openLogin, openRegister }: { openLogin: () => void; openRegister: () => void }) {
+  const firstName = sessionStorage.getItem("firstName");
+
+  if (firstName) {
+    return (
+      <div className="hidden lg:flex items-center space-x-3 rtl:space-x-reverse">
+        <div className="flex items-center space-x-2 rtl:space-x-reverse bg-gray-100 px-3 py-1 rounded-full">
+          <div className="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-medium">
+            {firstName[0].toUpperCase()}
+          </div>
+          <span className="text-sm font-medium">{firstName}</span>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="hidden lg:flex items-center space-x-3 rtl:space-x-reverse">
+      <Button variant="ghost" size="sm" onClick={openLogin}>
+        <div className="flex items-center space-x-1 rtl:space-x-reverse">
+          <LogIn className="w-4 h-4" />
+          <span>התחברות</span>
+        </div>
+      </Button>
+      <Button variant="default" size="sm" onClick={openRegister}>
+        <div className="flex items-center space-x-1 rtl:space-x-reverse">
+          <User className="w-4 h-4" />
+          <span>הרשמה</span>
+        </div>
+      </Button>
+    </div>
+  );
+}
 
 function HamburgerSection(props: { isMenuOpen: boolean; toggleMenu: () => void }) {
   return (
@@ -51,23 +265,32 @@ function HamburgerSection(props: { isMenuOpen: boolean; toggleMenu: () => void }
         aria-label="פתח תפריט"
       >
         {props.isMenuOpen ? (
-          <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /><path d="M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>
+          <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none">
+            <path d="M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+            <path d="M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+          </svg>
         ) : (
-          <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>
+          <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none">
+            <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+          </svg>
         )}
       </button>
     </div>
   );
 }
 
-
 function MobileMenuSection(props: {
   isMenuOpen: boolean;
   closeMenu: () => void;
   isActive: (path: string) => boolean;
   navItems: { name: string; path: string }[];
+  openLogin: () => void;
+  openRegister: () => void;
 }) {
   if (!props.isMenuOpen) return null;
+
+  const firstName = sessionStorage.getItem("firstName");
+
   return (
     <div className="lg:hidden mt-4 py-4 border-t border-gray-200">
       <nav className="flex flex-col space-y-4">
@@ -76,18 +299,54 @@ function MobileMenuSection(props: {
             key={item.path}
             to={item.path}
             onClick={props.closeMenu}
-            className={`px-4 py-2 text-sm font-medium transition-colors ${props.isActive(item.path)
-              ? "text-primary bg-primary/10 rounded-lg"
-              : "text-gray-700 hover:text-primary hover:bg-gray-50 rounded-lg"
-              }`}
+            className={`px-4 py-2 text-sm font-medium transition-colors ${
+              props.isActive(item.path)
+                ? "text-primary bg-primary/10 rounded-lg"
+                : "text-gray-700 hover:text-primary hover:bg-gray-50 rounded-lg"
+            }`}
           >
             {item.name}
           </Link>
         ))}
+
+        <div className="border-t border-gray-200 pt-4 mt-4 space-y-3">
+          {firstName ? (
+            <div className="flex items-center space-x-2 rtl:space-x-reverse px-4 py-2">
+              <div className="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-medium">
+                {firstName[0].toUpperCase()}
+              </div>
+              <span className="text-sm font-medium">{firstName}</span>
+            </div>
+          ) : (
+            <>
+              <button
+                onClick={() => {
+                  props.closeMenu();
+                  props.openLogin();
+                }}
+                className="w-full flex items-center space-x-2 rtl:space-x-reverse px-4 py-2 text-sm font-medium text-gray-700 hover:text-primary hover:bg-gray-50 rounded-lg transition-colors"
+              >
+                <LogIn className="w-4 h-4" />
+                <span>התחברות</span>
+              </button>
+              <button
+                onClick={() => {
+                  props.closeMenu();
+                  props.openRegister();
+                }}
+                className="w-full flex items-center space-x-2 rtl:space-x-reverse px-4 py-2 text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg transition-colors"
+              >
+                <User className="w-4 h-4" />
+                <span>הרשמה</span>
+              </button>
+            </>
+          )}
+        </div>
       </nav>
     </div>
   );
 }
+
 const Header = () => {
   const navItems = [
     { name: "בית", path: "/" },
@@ -96,27 +355,37 @@ const Header = () => {
     { name: "מאמרים", path: "/articles" },
     { name: "עדויות", path: "/testimonials" },
   ];
+
   const { isMenuOpen, toggleMenu, closeMenu, isActive } = useHeaderLogic();
+  const [isLoginOpen, setLoginOpen] = useState(false);
+  const [isRegisterOpen, setRegisterOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 w-full z-50 glass-effect border-b border-gray-200/20">
-      <div className="container mx-auto px-4 py-4">
-        <div className="relative flex items-center">
-          <LogoSection />
-          <NavLinksSection
-            isActive={isActive}
-            navItems={navItems}
-          />
-          <HamburgerSection isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
+    <>
+      <header className="fixed top-0 w-full z-50 glass-effect border-b border-gray-200/20">
+        <div className="container mx-auto px-4 py-4">
+          <div className="relative flex items-center justify-between">
+            <LogoSection />
+            <NavLinksSection isActive={isActive} navItems={navItems} />
+            <AuthSection openLogin={() => setLoginOpen(true)} openRegister={() => setRegisterOpen(true)} />
+            <HamburgerSection isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
+          </div>
           <MobileMenuSection
             isMenuOpen={isMenuOpen}
             closeMenu={closeMenu}
             isActive={isActive}
             navItems={navItems}
+            openLogin={() => setLoginOpen(true)}
+            openRegister={() => setRegisterOpen(true)}
           />
         </div>
-      </div>
-    </header>
+      </header>
+
+      {/* Modals */}
+      <LoginModal isOpen={isLoginOpen} onClose={() => setLoginOpen(false)} />
+      <RegisterModal isOpen={isRegisterOpen} onClose={() => setRegisterOpen(false)} />
+    </>
   );
 };
+
 export default Header;
