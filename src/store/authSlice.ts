@@ -38,6 +38,33 @@ export const login = createAsyncThunk(
     }
 );
 
+// Google login - redirect flow
+export const googleLoginRedirect = () => {
+    window.location.href = `${BASE_URL.replace('/api', '')}/api/auth/google`;
+};
+
+// Google login - callback handler (to be called after redirect)
+export const googleLoginCallback = createAsyncThunk(
+    "auth/googleLoginCallback",
+    async (data: { token: string; user: User }, thunkAPI) => {
+        try {
+            // שמור את כל נתוני המשתמש והטוקן
+            if (data.token) {
+                sessionStorage.setItem("token", data.token);
+            }
+            if (data.user) {
+                Object.entries(data.user).forEach(([key, value]) => {
+                    if (typeof value === "string" || typeof value === "number") {
+                        sessionStorage.setItem(key, value.toString());
+                    }
+                });
+            }
+            return { token: data.token, user: data.user };
+        } catch (err: any) {
+            return thunkAPI.rejectWithValue("Google login failed");
+        }
+    }
+);
 
 export const changePassword = createAsyncThunk(
     'auth/changePassword',
@@ -107,10 +134,23 @@ const authSlice = createSlice({
             .addCase(login.fulfilled, (state, action) => {
                 state.loading = false;
                 state.currentUser = action.payload;
+                console.log('Redux: User set after login:', action.payload);
             })
             .addCase(login.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message || 'Login failed';
+            })
+            .addCase(googleLoginCallback.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(googleLoginCallback.fulfilled, (state, action) => {
+                state.loading = false;
+                state.currentUser = action.payload.user;
+            })
+            .addCase(googleLoginCallback.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload as string || 'Google login failed';
             })
             .addCase(changePassword.pending, (state) => {
                 state.loading = true;

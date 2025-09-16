@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import type { AppDispatch } from "@/store/store";
 import { login } from "@/store/authSlice";
 
+
 const loginSchema = z.object({
   email: z.string().email("כתובת אימייל לא תקינה"),
   password: z.string().min(6, "סיסמה חייבת להכיל לפחות 6 תווים"),
@@ -32,8 +33,28 @@ export const LoginModal = ({ isOpen, onClose }: LoginModalProps) => {
   };
 
   const handleGoogleLogin = () => {
-    window.open("/api/auth/google", "_self");
-    onClose();
+    const popup = window.open(
+      `${import.meta.env.VITE_API_URL.replace('/api', '')}/api/auth/google`,
+      '_blank',
+      'width=500,height=600'
+    );
+    // Listen for message from popup
+    const receiveMessage = (event: MessageEvent) => {
+      if (event.origin !== import.meta.env.VITE_API_URL.replace('/api', '')) return;
+      const { token, user } = event.data;
+      if (token) sessionStorage.setItem('token', token);
+      if (user) {
+        Object.entries(user).forEach(([key, value]) => {
+          if (typeof value === 'string' || typeof value === 'number') {
+            sessionStorage.setItem(key, value.toString());
+          }
+        });
+      }
+      dispatch({ type: 'auth/login/fulfilled', payload: { user, token } });
+      window.removeEventListener('message', receiveMessage);
+      onClose();
+    };
+    window.addEventListener('message', receiveMessage, { once: true });
   };
 
   return (
@@ -79,7 +100,7 @@ export const LoginModal = ({ isOpen, onClose }: LoginModalProps) => {
         <Button
           variant="outline"
           className="mt-4 w-full"
-          onClick={() => window.location.href = `${import.meta.env.VITE_API_URL.replace('/api', '')}/api/auth/google`}
+          onClick={handleGoogleLogin}
         >
           התחבר עם Google
         </Button>
